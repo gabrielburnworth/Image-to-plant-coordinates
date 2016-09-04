@@ -1,4 +1,5 @@
-*.txt
-*_0-trimmed.png
-*_1-processed.png
-simulated_stage-*.png
+*
+!farmbot.png
+!*.sh
+!*.py
+!*.gitignore
