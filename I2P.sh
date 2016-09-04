@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Image to Plant Coordinate Converter"
+echo "-----------------------------------"
+
 # Check for correct number of arguments
 if [ ! $# -lt 2 ]
   then
@@ -18,6 +21,8 @@ if [ -z "$1" ] # no argument
     [ ! -f "$1" ] || [ "$1" = $image ] || mv "$1" $image  # rename without spaces if spaces exist and not done already
     if [ ! "$1" = $image ]; then echo "Image renamed to $image"; fi # Inform that image was renamed
 fi
+
+echo "Image to convert: $image"
 
 # Input (first run only--script will use saved parameters in file if one exists)
 size=200
@@ -103,6 +108,9 @@ while read p; do
   yh=$(( starty + yp * scale ))
   echo "$xh,$yh" >> $coord
 done <$text
+
+count=$(cat $coord | wc -l)
+echo "$count plant coordinates generated."
 
 echo "Simulating plants..."
 
