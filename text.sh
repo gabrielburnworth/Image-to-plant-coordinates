@@ -4,11 +4,11 @@
 if [ -z "$1" ]
   then
     read -p $'Enter text and press <Enter>\n' text
-	else
-		name=$1
-		dirname="text_$name"
-		inputparameters=$dirname/$name'_INPUT-parameters.txt'
-		text=$(sed -n '1p' < $inputparameters | cut -d "=" -f 2)
+  else
+    name=$1
+    dirname="text_$name"
+    inputparameters=$dirname/$name'_INPUT-parameters.txt'
+    text=$(sed -n '1p' < $inputparameters | cut -d "=" -f 2) # Load text
 fi
 
 # Input (first run only--script will use saved parameters in file if one exists)
@@ -19,11 +19,11 @@ starty=200
 n=2
 
 # Output
-name=${text:0:10}
-name=${name// /_}
-if [ -z "$name" ]; then exit 1; fi
+name=${text:0:10} # Name will be first 10 characters of text string
+name=${name// /_} # with spaces replaced by underscores
+if [ -z "$name" ]; then exit 1; fi # if name is blank, exit
 dirname="text_$name"
-[ -d "$dirname" ] || mkdir "$dirname"
+[ -d "$dirname" ] || mkdir "$dirname" # if directory doesn't exist, create it
 image=$dirname/$name'.png'
 output=$dirname/$name'_1-processed.png'
 pixels=$dirname/$name'_2-black-pixels.txt'
@@ -31,30 +31,32 @@ coord=$dirname/$name'_3-coord.txt'
 
 # Save/load input parameters
 inputparameters=$dirname/$name'_INPUT-parameters.txt'
-if [ -f "$inputparameters" ]
-	then
-		# Load
-		size=$(sed -n '2p' < $inputparameters | cut -d "=" -f 2)
-		scale=$(sed -n '3p' < $inputparameters | cut -d "=" -f 2)
-		startx=$(sed -n '4p' < $inputparameters | cut -d "=" -f 2)
-		starty=$(sed -n '5p' < $inputparameters | cut -d "=" -f 2)
-		n=$(sed -n '6p' < $inputparameters | cut -d "=" -f 2)
-	else
-		# Save
-		echo "text=$text" >> $inputparameters
-		echo "size=$size" >> $inputparameters
-		echo "scale=$scale" >> $inputparameters
-		echo "startx=$startx" >> $inputparameters
-		echo "starty=$starty" >> $inputparameters
-		echo "n=$n" >> $inputparameters
+if [ -f "$inputparameters" ] # parameter file exists
+  then
+    # Load
+    size=$(sed -n '2p' < $inputparameters | cut -d "=" -f 2)
+    scale=$(sed -n '3p' < $inputparameters | cut -d "=" -f 2)
+    startx=$(sed -n '4p' < $inputparameters | cut -d "=" -f 2)
+    starty=$(sed -n '5p' < $inputparameters | cut -d "=" -f 2)
+    n=$(sed -n '6p' < $inputparameters | cut -d "=" -f 2)
+  else
+    # Save
+    echo "text=$text" >> $inputparameters
+    cho "size=$size" >> $inputparameters
+    echo "scale=$scale" >> $inputparameters
+    echo "startx=$startx" >> $inputparameters
+    echo "starty=$starty" >> $inputparameters
+    echo "n=$n" >> $inputparameters
 fi
 
 echo "Converting to coordinates..."
 
+# Create image with text
 convert -background white -fill black \
   -pointsize 72 label:"$text" \
-	$image
+  $image
 
+# If it doesn't create the image, exit
 [ -f "$image" ] || exit 1
 
 # Identify original image size
@@ -63,9 +65,9 @@ originaly=$(identify $image | cut -d " " -f 3 | cut -d "x" -f 2)
 
 # Convert to black pixels on white background
 convert $image \
-	-resize $size'x'$size \
-	-fuzz 50% -fill '#bdbdbd' -opaque black \
-	-colorspace Gray -ordered-dither o$n'x'$n $output
+  -resize $size'x'$size \
+  -fuzz 50% -fill '#bdbdbd' -opaque black \
+  -colorspace Gray -ordered-dither o$n'x'$n $output
 
 # Save pixels to text file
 convert $output $pixels
