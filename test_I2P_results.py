@@ -13,7 +13,7 @@ except IOError:
     print "File: {} not found.\nTry running `bash I2P.sh`".format(filename)
     sys.exit()
 
-stages = [1, 4, 6, 10]
+stages = [2, 3, 5, 8]
 
 for stage in stages:
 
@@ -25,7 +25,8 @@ for stage in stages:
 
     plt.xlim(0, 3000)
     plt.ylim(0, 1500)
+    plt.tick_params(axis='both', which='major', labelsize=10)
 
     plt.axes().set_aspect('equal')
-    plt.tight_layout()
-    plt.savefig("simulated_stage-{:02d}".format(stage), dpi=200)
+    plt.savefig("simulated_stage-{:02d}".format(stage),
+                bbox_inches='tight', dpi=200)
