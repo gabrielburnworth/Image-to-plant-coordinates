@@ -45,12 +45,12 @@ Generates coordinates to grow plants in the shape of an image
 
 #### Simulated plant-rendered image - plants small:
 
-![simulated_stage-04](https://cloud.githubusercontent.com/assets/12681652/18229152/e96d2efe-7221-11e6-9f94-3aa0cf2bf1d9.png)
+![simulated_stage-03](https://cloud.githubusercontent.com/assets/12681652/18229214/09ac3d10-7225-11e6-87ec-a5304a1f40b2.png)
 
 
 #### Simulated plant-rendered image - plants larger:
 
-![simulated_stage-06](https://cloud.githubusercontent.com/assets/12681652/18229150/e96921d8-7221-11e6-9a7e-08ff1ae7bc25.png)
+![simulated_stage-06](https://cloud.githubusercontent.com/assets/12681652/18229207/94f1f316-7224-11e6-8997-b901ca91b7d6.png)
 
 
 ## Options
