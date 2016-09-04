@@ -1,21 +1,14 @@
 #!/bin/bash
 
-# Check for correct number of arguments
-if [ ! $# -lt 2 ]
-  then
-    echo "Too many arguments supplied."
-		echo "Try enclosing the image filename in quotes."
-		exit 1
-fi
-
-# Image to process
+# Text to process
 if [ -z "$1" ]
   then
-    image=farmbot.png
+    read -p $'Enter text and press <Enter>\n' text
 	else
-		image=${1// /_} # remove spaces in name
-		[ ! -f "$1" ] || [ "$1" = $image ] || mv "$1" $image  # rename without spaces
-		if [ ! "$1" = $image ]; then echo "Image renamed to $image"; fi
+		name=$1
+		dirname="text_$name"
+		inputparameters=$dirname/$name'_INPUT-parameters.txt'
+		text=$(sed -n '1p' < $inputparameters | cut -d "=" -f 2)
 fi
 
 # Input (first run only--script will use saved parameters in file if one exists)
@@ -26,13 +19,14 @@ starty=200
 n=2
 
 # Output
-name=$(echo $image | cut -d '.' -f 1)
+name=${text:0:10}
+name=${name// /_}
 if [ -z "$name" ]; then exit 1; fi
-dirname="$name"
+dirname="text_$name"
 [ -d "$dirname" ] || mkdir "$dirname"
-trimmed=$dirname/$name'_0-trimmed.png'
+image=$dirname/$name'.png'
 output=$dirname/$name'_1-processed.png'
-text=$dirname/$name'_2-black-pixels.txt'
+pixels=$dirname/$name'_2-black-pixels.txt'
 coord=$dirname/$name'_3-coord.txt'
 
 # Save/load input parameters
@@ -47,7 +41,7 @@ if [ -f "$inputparameters" ]
 		n=$(sed -n '6p' < $inputparameters | cut -d "=" -f 2)
 	else
 		# Save
-		echo "# input parameters for $image" >> $inputparameters
+		echo "text=$text" >> $inputparameters
 		echo "size=$size" >> $inputparameters
 		echo "scale=$scale" >> $inputparameters
 		echo "startx=$startx" >> $inputparameters
@@ -55,33 +49,35 @@ if [ -f "$inputparameters" ]
 		echo "n=$n" >> $inputparameters
 fi
 
+echo "Converting to coordinates..."
+
+convert -background white -fill black \
+  -pointsize 72 label:"$text" \
+	$image
+
+[ -f "$image" ] || exit 1
+
 # Identify original image size
 originalx=$(identify $image | cut -d " " -f 3 | cut -d "x" -f 1)
 originaly=$(identify $image | cut -d " " -f 3 | cut -d "x" -f 2)
 
-echo "Converting to coordinates..."
-
-# Trim image
-convert $image -background white -flatten -trim +repage \
-	-resize $originalx'x'$originaly $trimmed
-
 # Convert to black pixels on white background
-convert $trimmed \
+convert $image \
 	-resize $size'x'$size \
 	-fuzz 50% -fill '#bdbdbd' -opaque black \
 	-colorspace Gray -ordered-dither o$n'x'$n $output
 
 # Save pixels to text file
-convert $output $text
+convert $output $pixels
 
 # Remove white pixels
-sed -i '/(255,255,255)/d' $text
+sed -i '/(255,255,255)/d' $pixels
 
 # Save only pixel locations
-sed -i 's/:.*//' $text
+sed -i 's/:.*//' $pixels
 
 # Remove header
-sed -i -e "1d" $text
+sed -i -e "1d" $pixels
 
 # Create blank coordinate output file (or clear existing)
 > $coord
@@ -101,7 +97,7 @@ while read p; do
   xh=$(( startx + xp * scale ))
   yh=$(( starty + yp * scale ))
   echo "$xh,$yh" >> $coord
-done <$text
+done <$pixels
 
 echo "Simulating plants..."
 
