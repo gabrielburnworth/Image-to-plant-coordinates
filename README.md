@@ -1,17 +1,23 @@
 # Image to Plant Coordinates
 
-Generates coordinates to grow plants in the shape of an image
+Generates coordinates to grow plants in the shape of an image using diffused pixel ordered dithering
+
+## Dependencies
+
+`sudo apt-get install imagemagick`
+
+for simulations: `sudo apt-get install python-numpy python-matplotlib`
 
 ## Usage
 
 `bash I2P.sh`
 
-## Output
-
-#### Input:
+## Input
 
 ![farmbot](https://cloud.githubusercontent.com/assets/12681652/18229154/e97b0d1c-7221-11e6-9992-f78d1b94abb7.png)
 
+
+## Output
 
 #### Trimmed image:
 
@@ -59,9 +65,9 @@ edit values in the `Input` section of `I2P.sh`
 
 variable | default | description
  :---: | :---: | :---
-`image` | farmbot.png | Input image: try dark object on a white or transparent background.
+`image` | farmbot.png | Input image: try a dark object on a white or transparent background.
 `size` | 200 | Size to resize the image. Affects number of coordinate results.
 `scale` | 13 | Scale for image rendered in plants.
 `startx` | 200 | X coordinate of bottom left of plant-rendered image.
 `starty` | 200 | Y coordinate of bottom left of plant-rendered image.
-`n` | 2 | (2-8, even). Affects number of coordinate results.
+`n` | 2 | (2,3,4,8). Ordered dither tiling size. Affects number of coordinate results.
