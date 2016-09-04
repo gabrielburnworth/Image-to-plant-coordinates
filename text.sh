@@ -1,15 +1,20 @@
 #!/bin/bash
 
+echo "Text to Plant Coordinate Converter"
+echo "-----------------------------------"
+
 # Text to process
 if [ -z "$1" ]
   then
-    read -p $'Enter text and press <Enter>\n' text
+    read -p $'Enter text and press <Enter>:\n' text
   else
     name=$1
     dirname="text_$name"
     inputparameters=$dirname/$name'_INPUT-parameters.txt'
     text=$(sed -n '1p' < $inputparameters | cut -d "=" -f 2) # Load text
 fi
+
+echo "Text to convert: $text"
 
 # Input (first run only--script will use saved parameters in file if one exists)
 size=200
@@ -100,6 +105,9 @@ while read p; do
   yh=$(( starty + yp * scale ))
   echo "$xh,$yh" >> $coord
 done <$pixels
+
+count=$(cat $coord | wc -l)
+echo "$count plant coordinates generated."
 
 echo "Simulating plants..."
 
