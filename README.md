@@ -10,7 +10,15 @@ for simulations: `sudo apt-get install python-numpy python-matplotlib`
 
 ## Usage
 
-`bash I2P.sh`
+##### Convert `farmbot.png` to plant coordinates:
+
+`bash I2P.sh farmbot.png`
+
+##### Adjust parameters:
+
+Edit and save parameter values (see [options](#options)) in `farmbot_INPUT-parameters.txt` in the `farmbot` directory
+
+Run `bash I2P.sh farmbot.png` again
 
 ## Input
 
@@ -61,7 +69,10 @@ for simulations: `sudo apt-get install python-numpy python-matplotlib`
 
 ## Options
 
-edit values in the `Input` section of `I2P.sh`
+Run script with default values first.
+
+Then, edit values in `*_INPUT-parameters.txt` in the directory created during script execution.
+The directory name will be the input image name with spaces replaced with underscores if running `bash I2P.sh`, or 'text_' and the first 10 characters of text string with spaces replaced with underscores if running `bash text.sh`.
 
 variable | default | description
  :---: | :---: | :---
@@ -71,3 +82,25 @@ variable | default | description
 `startx` | 200 | X coordinate of bottom left of plant-rendered image.
 `starty` | 200 | Y coordinate of bottom left of plant-rendered image.
 `n` | 2 | (2,3,4,8). Ordered dither tiling size. Affects number of coordinate results.
+
+## Convert text
+
+##### Convert text to plant coordinates:
+
+`bash text.sh`
+
+Enter text at prompt.
+```
+Enter text and press <Enter>
+farmbot
+```
+
+![farmbot_3-coord_simulated_stage-03](https://cloud.githubusercontent.com/assets/12681652/18233267/0e02a13e-7297-11e6-889c-7171a9df4557.png)
+
+##### Adjust parameters:
+
+Edit and save parameter values (see [options](#options)) in `farmbot_INPUT-parameters.txt` in the `text_farmbot` directory
+
+Run `bash text.sh farmbot`
+
+(For other text, the directory name will be 'text_' and the first 10 characters of text string with spaces replaced with underscores. For the argument to re-run with updated parameters, use the directory name without 'text_'. You may also use `bash text.sh` and retype the text when prompted. To return to default values, delete the 'text_*' directory and run again.)
