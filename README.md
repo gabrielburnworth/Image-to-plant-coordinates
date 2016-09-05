@@ -81,13 +81,9 @@ Run `bash I2P.sh farmbot.png` again
 ...
 ```
 
-###### Optimization Method
+Coordinate path optimization uses a nearest neighbor algorithm, beginning at the leftmost point.
 
-Begin at bottom-leftmost point and travel to the nearest point.
-Continue to the next closest point until all points have been reached.
-Once a point has been reached, it is no longer a candidate.
-
-![farmbot_optimization-details](https://cloud.githubusercontent.com/assets/12681652/18238909/299801be-72f6-11e6-8928-5aaba0f8e95a.png)
+![farmbot_optimization-details](https://cloud.githubusercontent.com/assets/12681652/18240497/0cbd3b76-7301-11e6-8943-b92defbbadcd.png)
 
 
 ## Options
