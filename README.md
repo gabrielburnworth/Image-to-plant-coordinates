@@ -93,7 +93,7 @@ Coordinate path optimization uses a nearest neighbor algorithm, beginning at the
 Run script with default values first.
 
 Then, edit values in `*_INPUT-parameters.txt` in the directory created during script execution.
-The directory name will be the input image name with spaces replaced with underscores if running `bash I2P.sh`, or 'text_' and the first 10 characters of text string with spaces replaced with underscores if running `bash text.sh`.
+The directory name will be the input image name with spaces replaced with underscores if running `bash I2P.sh`, or 'text_' and the first 24 characters of the text string with spaces replaced with underscores if running `bash text.sh`.
 
 variable | default | description
  :---: | :---: | :---
@@ -124,4 +124,4 @@ Edit and save parameter values (see [options](#options)) in `farmbot_INPUT-param
 
 Run `bash text.sh farmbot`
 
-(For other text, the directory name will be 'text_' and the first 10 characters of text string with spaces replaced with underscores. For the argument to re-run with updated parameters, use the directory name without 'text_'. You may also use `bash text.sh` and retype the text when prompted. To return to default values, delete the 'text_*' directory and run again.)
+(For other text, the directory name will be 'text_' and the first 24 characters of the text string with spaces replaced with underscores. For the argument to re-run with updated parameters, use the directory name without 'text_'. You may also use `bash text.sh` and retype the text when prompted. To return to default values, delete the 'text_*' directory and run again.)
