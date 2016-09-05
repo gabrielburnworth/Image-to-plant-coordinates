@@ -113,7 +113,9 @@ count=$(cat $coord | wc -l)
 echo "$count plant coordinates generated."
 
 echo "Simulating plants..."
-
 python test_I2P_results.py $coord
+
+echo "Optimizing coordinate path..."
+python path_optimization.py $coord
 
 echo "Done."

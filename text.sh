@@ -24,7 +24,7 @@ starty=200
 n=2
 
 # Output
-name=${text:0:10} # Name will be first 10 characters of text string
+name=${text:0:24} # Name will be first 24 characters of text string
 name=${name// /_} # with spaces replaced by underscores
 if [ -z "$name" ]; then exit 1; fi # if name is blank, exit
 dirname="text_$name"
@@ -47,7 +47,7 @@ if [ -f "$inputparameters" ] # parameter file exists
   else
     # Save
     echo "text=$text" >> $inputparameters
-    cho "size=$size" >> $inputparameters
+    echo "size=$size" >> $inputparameters
     echo "scale=$scale" >> $inputparameters
     echo "startx=$startx" >> $inputparameters
     echo "starty=$starty" >> $inputparameters
@@ -110,7 +110,9 @@ count=$(cat $coord | wc -l)
 echo "$count plant coordinates generated."
 
 echo "Simulating plants..."
-
 python test_I2P_results.py $coord
+
+echo "Optimizing coordinate path..."
+python path_optimization.py $coord
 
 echo "Done."

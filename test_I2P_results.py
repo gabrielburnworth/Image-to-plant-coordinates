@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +8,7 @@ import numpy as np
 try:
     filename = sys.argv[1]
 except IndexError:
-    filename = "farmbot_3-coord.txt"
+    filename = "farmbot/farmbot_3-coord.txt"
 
 name = filename.rsplit('.', 1)[0]
 
