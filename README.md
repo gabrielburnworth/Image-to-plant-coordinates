@@ -8,6 +8,8 @@ Generates coordinates to grow plants in the shape of an image using _diffused pi
 
 for simulations: `sudo apt-get install python-numpy python-matplotlib`
 
+for path optimization: `sudo apt-get install python-scipy`
+
 ## Usage
 
 ##### Convert `farmbot.png` to plant coordinates:
@@ -65,6 +67,25 @@ Run `bash I2P.sh farmbot.png` again
 #### Simulated plant-rendered image - plants larger:
 
 ![simulated_stage-06](https://cloud.githubusercontent.com/assets/12681652/18229207/94f1f316-7224-11e6-8997-b901ca91b7d6.png)
+
+
+#### __Optimized__ plant coordinate text file (x, y) from bottom left of bed:
+
+```
+200.0,460.0
+200.0,486.0
+213.0,499.0
+226.0,486.0
+...
+```
+
+###### Optimization Method
+
+Begin at bottom-leftmost point and travel to the nearest point.
+Continue to the next closest point until all points have been reached.
+Once a point has been reached, it is no longer a candidate.
+
+![farmbot_optimization-details](https://cloud.githubusercontent.com/assets/12681652/18238909/299801be-72f6-11e6-8928-5aaba0f8e95a.png)
 
 
 ## Options
