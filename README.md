@@ -4,11 +4,13 @@ Generates coordinates to grow plants in the shape of an image using _diffused pi
 
 ## Dependencies
 
-`sudo apt-get install imagemagick`
+`sudo apt-get install imagemagick python-numpy python-matplotlib  python-scipy`
 
-for simulations: `sudo apt-get install python-numpy python-matplotlib`
+__ImageMagick__ is used for image processing
 
-for path optimization: `sudo apt-get install python-scipy`
+__NumPy__ and __matplotlib__ are used for simulations
+
+__SciPy__ is used for path optimization
 
 ## Usage
 
