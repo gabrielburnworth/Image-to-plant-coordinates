@@ -2,6 +2,8 @@
 
 Generates coordinates to grow plants in the shape of an image using _diffused pixel ordered dithering_
 
+Orders plant coordinates for an optimized path using a _nearest neighbor algorithm_
+
 ## Dependencies
 
 `sudo apt-get install imagemagick python-numpy python-matplotlib  python-scipy`

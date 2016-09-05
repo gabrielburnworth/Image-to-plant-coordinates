@@ -16,8 +16,8 @@ if [ -z "$1" ] # no argument
   then
     image=farmbot.png # load default image
   else
-    if [ ! -f "$1" ]; then echo "$1 does not exist."; exit 1; fi # verify that image exists
     image=${1// /_} # remove spaces in name
+    if [ ! -f "$1" ] && [ ! -f "$image" ]; then echo "$1 does not exist."; exit 1; fi # verify that image exists
     [ ! -f "$1" ] || [ "$1" = $image ] || mv "$1" $image  # rename without spaces if spaces exist and not done already
     if [ ! "$1" = $image ]; then echo "Image renamed to $image"; fi # Inform that image was renamed
 fi

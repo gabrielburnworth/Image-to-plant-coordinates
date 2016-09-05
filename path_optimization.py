@@ -2,7 +2,7 @@
 
 """Optimizes coordinate path
 
-A very simple TSP solution"""
+Use a nearest neighbor algorithm, a simple TSP solution"""
 
 import sys
 import matplotlib.pyplot as plt
@@ -17,11 +17,11 @@ def closest_node(node, nodes):
     idx = cdist([node], nodes).argmin()
     return idx, nodes[idx]
 
-def next_closest_point(data):
-    """Optimize path by chosing the closest point to the current point."""
+def NN_algorithm(data):
+    """Optimize path by continually chosing
+    the closest point to the current point."""
     data_whittle = list(data)
-    new_list = [data[0]]
-    del data_whittle[0]
+    new_list = [data_whittle.pop(0)]
 
     for _ in data:
         if len(data_whittle) == 0:
@@ -37,11 +37,9 @@ def next_closest_point(data):
 def path_length(points):
     """Calculate total length of path."""
     distance = 0
-    fp = 1
-    for point in points:
-        if fp:
+    for i, point in enumerate(points):
+        if i == 0:
             prev_point = point
-            fp = 0
         else:
             distance += np.linalg.norm(point-prev_point)
             prev_point = point
@@ -107,11 +105,11 @@ if opt_compare:
 
     plot_path('Vertical Raster', 'blue', data_sorted_by_x, (0, 4), 1)
 
-    plot_path('Next closest point: vertically sorted', 'green',
-              next_closest_point(data_sorted_by_y), (4, 0), 2)
+    plot_path('Nearest Neighbor from top', 'green',
+              NN_algorithm(data_sorted_by_y), (4, 0), 2)
 
-    opt_data = plot_path('Next closest point: horizontally sorted', 'darkorange',
-                         next_closest_point(data_sorted_by_x), (4, 4), 3)
+    opt_data = plot_path('Nearest Neighbor from left', 'darkorange',
+                         NN_algorithm(data_sorted_by_x), (4, 4), 3)
 
     # Save plot
     plt.tick_params(axis='both', which='major', labelsize=10)
@@ -119,7 +117,7 @@ if opt_compare:
     plt.savefig("{}_optimization-details".format(name),
                 bbox_inches='tight', dpi=200)
 else:
-    opt_data = next_closest_point(data_sorted_by_x)
+    opt_data = NN_algorithm(data_sorted_by_x)
 
 # Save optimized data
 np.savetxt("{}_optimized.txt".format(name), opt_data, delimiter=',', fmt='%s')
