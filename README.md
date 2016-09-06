@@ -20,7 +20,7 @@ __SciPy__ is used for path optimization
 
 `bash I2P.sh farmbot.png`
 
-See [options](#options)) for descriptions of parameters
+See [options](#options) for descriptions of parameters
 
 ## Input
 
@@ -103,10 +103,10 @@ variable | default | description
 
 Enter text at prompt.
 ```
-Enter text and press <Enter>
+Enter text and press <Enter>:
 farmbot
 ```
 
 ![farmbot_3-coord_simulated_stage-03](https://cloud.githubusercontent.com/assets/12681652/18233267/0e02a13e-7297-11e6-889c-7171a9df4557.png)
 
-See [options](#options)) for descriptions of parameters
+See [options](#options) for descriptions of parameters
