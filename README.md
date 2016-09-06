@@ -20,11 +20,7 @@ __SciPy__ is used for path optimization
 
 `bash I2P.sh farmbot.png`
 
-##### Adjust parameters:
-
-Edit and save parameter values (see [options](#options)) in `farmbot_INPUT-parameters.txt` in the `farmbot` directory
-
-Run `bash I2P.sh farmbot.png` again
+See [options](#options)) for descriptions of parameters
 
 ## Input
 
@@ -90,14 +86,9 @@ Coordinate path optimization uses a nearest neighbor algorithm, beginning at the
 
 ## Options
 
-Run script with default values first.
-
-Then, edit values in `*_INPUT-parameters.txt` in the directory created during script execution.
-The directory name will be the input image name with spaces replaced with underscores if running `bash I2P.sh`, or 'text_' and the first 24 characters of the text string with spaces replaced with underscores if running `bash text.sh`.
-
 variable | default | description
  :---: | :---: | :---
-`image` | farmbot.png | Input image: try a dark object on a white or transparent background.
+`image` | farmbot.png | Input image: try a dark object on a light background.
 `size` | 200 | Pixel width/height used to resize the image. Affects number of coordinate results.
 `scale` | 13 | Scale for image rendered in plants.
 `startx` | 200 | X coordinate of bottom left of plant-rendered image.
@@ -118,10 +109,4 @@ farmbot
 
 ![farmbot_3-coord_simulated_stage-03](https://cloud.githubusercontent.com/assets/12681652/18233267/0e02a13e-7297-11e6-889c-7171a9df4557.png)
 
-##### Adjust parameters:
-
-Edit and save parameter values (see [options](#options)) in `farmbot_INPUT-parameters.txt` in the `text_farmbot` directory
-
-Run `bash text.sh farmbot`
-
-(For other text, the directory name will be 'text_' and the first 24 characters of the text string with spaces replaced with underscores. For the argument to re-run with updated parameters, use the directory name without 'text_'. You may also use `bash text.sh` and retype the text when prompted. To return to default values, delete the 'text_*' directory and run again.)
+See [options](#options)) for descriptions of parameters

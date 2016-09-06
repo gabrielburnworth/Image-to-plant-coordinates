@@ -24,8 +24,6 @@ stages = [1, 2, 3, 5, 8]
 
 for stage in stages:
 
-    plt.close("all")
-
     # Add soil
     plt.plot([0, 3000], [750, 750], '-', lw=1000, color='#8a6e45')
 
@@ -40,3 +38,12 @@ for stage in stages:
     plt.axes().set_aspect('equal')
     plt.savefig("{}_simulated_stage-{:02d}".format(name, stage),
                 bbox_inches='tight', dpi=200)
+    plt.clf()
+
+# Plant location preview
+plt.plot(x, y, 'ko')
+plt.xlim(0, 3000)
+plt.ylim(0, 1500)
+plt.axes().set_aspect('equal')
+print "Viewing plant locations. Close plot window when finished."
+plt.show()
