@@ -46,6 +46,7 @@ echo
 echo "INPUT PARAMETERS for text:"
 echo "-----------------------------------------------------------------"
 echo " s: save and run | r: reset to defaults | q: quit without saving"
+echo " h: help text"
 echo "-----------------------------------------------------------------"
 
 default_parameters()
@@ -112,7 +113,7 @@ input_parameters
 
 input_screen=1
 while [ $input_screen -eq 1 ]; do
-  read -p ">" -n 1 -r
+  read -sp ">" -n 1 -r
   case "$REPLY" in
     r) # reset parameters
       echo
@@ -127,26 +128,56 @@ while [ $input_screen -eq 1 ]; do
     i)
       echo -ne "\e[0K\r"
       read -p "size=" size
+      while ! [ "$size" -eq "$size" ] 2> /dev/null
+        do
+          tput cuu 1
+          tput el
+          read -p "[Please enter an integer] size=" size
+      done
       overwrite_printed_parameters
       ;;
     c)
       echo -ne "\e[0K\r"
       read -p "scale=" scale
+      while ! [ "$scale" -eq "$scale" ] 2> /dev/null
+        do
+          tput cuu 1
+          tput el
+          read -p "[Please enter an integer] scale=" scale
+      done
       overwrite_printed_parameters
       ;;
     x)
       echo -ne "\e[0K\r"
       read -p "startx=" startx
+      while ! [ "$startx" -eq "$startx" ] 2> /dev/null
+        do
+          tput cuu 1
+          tput el
+          read -p "[Please enter an integer] startx=" startx
+      done
       overwrite_printed_parameters
       ;;
     y)
       echo -ne "\e[0K\r"
       read -p "starty=" starty
+      while ! [ "$starty" -eq "$starty" ] 2> /dev/null
+        do
+          tput cuu 1
+          tput el
+          read -p "[Please enter an integer] starty=" starty
+      done
       overwrite_printed_parameters
       ;;
     n)
       echo -ne "\e[0K\r"
       read -p "n=" n
+      while ! [ "$n" -eq 2 -o "$n" -eq 3 -o "$n" -eq 4 -o "$n" -eq 8 ] 2> /dev/null
+        do
+          tput cuu 1
+          tput el
+          read -p "[Please enter 2, 3, 4, or 8] n=" n
+      done
       overwrite_printed_parameters
       ;;
     s) # Save input parameters to file (overwrite)
@@ -155,9 +186,49 @@ while [ $input_screen -eq 1 ]; do
       save_parameters
       input_screen=0
       ;;
+    h) # Help text
+      echo -e "\e[0K\rHelp text:"
+      echo -e "
+VARIABLE    DEFAULT        DESCRIPTION
+--------    -------        -----------
+size        200            Pixel width/height used to resize the image.
+                           Affects number of coordinate results.
+
+scale       13             Scale for image rendered in plants.
+
+
+startx      200            X coordinate of bottom left of plant-rendered image.
+
+
+starty      200            Y coordinate of bottom left of plant-rendered image.
+
+
+n           2 (2,3,4,8).   Ordered dither tiling size.
+                           Affects number of coordinate results.
+
+To install dependencies required for this program on Debian, run:
+sudo apt-get install imagemagick python-numpy python-matplotlib python-scipy
+
+"
+      read -p "Press <Enter> to continue..."
+      for i in `seq 1 24`; do
+        tput cuu 1
+        tput el
+      done
+      ;;
+#    w) # Install dependencies
+#      sudo apt-get install imagemagick python-numpy python-matplotlib python-scipy
+#      ;;
     q)
       echo -e "\e[0K\rExiting..."
       exit 0
+      ;;
+    '')
+      echo -ne "\e[0K\r"
+      ;;
+    *)
+      echo -ne "\e[0K\r"
+      ;;
   esac
 done
 
@@ -186,6 +257,7 @@ convert $output $pixels
 
 # Remove white pixels
 sed -i '/(255,255,255)/d' $pixels
+sed -i '/(65535,65535,65535)/d' $pixels
 
 # Save only pixel locations
 sed -i 's/:.*//' $pixels
@@ -221,6 +293,13 @@ python test_I2P_results.py $coord
 
 echo "Optimizing coordinate path..."
 python path_optimization.py $coord
+if [ $? -eq 0 ]; then
+    echo "Coordinate path optimized."
+else
+    tput setaf 1
+    echo -e "\nERROR: Path not optimized. Perhaps scipy is not installed?\nTry running 'sudo apt-get install python-scipy' if using Debian."
+    tput sgr0
+fi
 
 echo
 echo "Output saved in '$dirname/'."
