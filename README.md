@@ -110,3 +110,6 @@ farmbot
 ![farmbot_3-coord_simulated_stage-03](https://cloud.githubusercontent.com/assets/12681652/18233267/0e02a13e-7297-11e6-889c-7171a9df4557.png)
 
 See [options](#options) for descriptions of parameters
+
+## User interface screenshot
+![user_interface_screenshot](https://cloud.githubusercontent.com/assets/12681652/20242744/d612095c-a8ee-11e6-8c80-ee3134be3eea.png)
